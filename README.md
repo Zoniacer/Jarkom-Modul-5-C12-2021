@@ -7,13 +7,15 @@
 - Shidqi Dhaifullah - 05111940000108<br>
 
 #### (A) Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancangan yang diberikan Luffy dibawah ini:
-(map)
+![map Jarkom-Modul-5-C12-2021](https://user-images.githubusercontent.com/81344394/145678380-82eb83fa-3e5a-470a-a28d-f76f5d1fe24f.png)<br>
+
 
 #### (B) Karena kalian telah belajar subnetting dan routing, Luffy ingin meminta kalian untuk membuat topologi tersebut menggunakan teknik CIDR atau VLSM
 
 ##### Subnetting Dengan Teknik VLSM:
-(vlsm map)
-(vlsm tree)
+![vlsm map Jarkom-Modul-5-C12-2021](https://user-images.githubusercontent.com/81344394/145678395-53342010-999a-43a0-98ea-adcb5e17861c.png)<br>
+![vlsm tree Jarkom-Modul-5-C12-2021](https://user-images.githubusercontent.com/81344394/145678397-aaad0364-4cce-45fe-aa14-3b21dc49f508.png)<br>
+
 
 ##### Pembagian IP:
 
@@ -229,7 +231,7 @@ Keterangan:
   - `-o eth0`: output pada interface `eth0`
   - `-j SNAT`: target aturan untuk `SNAT`
   - `-s 10.20.0.0/21`: untuk semua paket dari subnet `10.20.0.0/21`
-  - `--to-source 192.168.122.[]`: IP Source menggunakan rentang IP untuk `eth0` pada `Foosha`
+  - `--to-source 192.168.122.[]`: IP Source menggunakan rentang IP untuk `eth0` pada `Foosha` <br><br>
 
 - Atur `nameserver` tiap node menuju DNS Server `Foosha`:
 ```
