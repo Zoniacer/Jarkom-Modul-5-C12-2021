@@ -6,6 +6,29 @@
 - Satrio Hanif Wicaksono - 05111940000103<br>
 - Shidqi Dhaifullah - 05111940000108<br>
 
+#### 2. Kalian diminta untuk mendrop semua akses HTTP dari luar Topologi kalian pada server yang merupakan DHCP Server dan DNS Server demi menjaga keamanan.
+- Pada Foosha, Jalankan perintah `iptables -A FORWARD -p tcp --dport 80 -d 10.20.0.16/29 -i eth0 -j DROP `
+
+##### Testing
+- Pada Jipangu dan Doriki, install netcat melalui perintah `apt-get install netcat `
+- Pada Jipangu dan Doriki, Jalankan perintah `nc -l -p 80 `
+- Pada Foosha, Jalankan perintah `nmap -p 80 10.20.0.18 ` untuk menguji Doriki dan `nmap -p 80 10.20.0.19 ` untuk menguji Jipangu
+- Foosha --> Doriki
+
+![Screenshot 2021-12-11 163052](https://user-images.githubusercontent.com/73422724/145673505-1a557524-0536-401e-86ac-e98460a87085.png)
+
+- Foosha --> Jipangu
+
+![Screenshot 2021-12-11 163321](https://user-images.githubusercontent.com/73422724/145673517-8b0b5e93-db3a-432c-88b4-4c2425f2b24f.png)
+
+- Doriki
+
+![Screenshot 2021-12-11 163446](https://user-images.githubusercontent.com/73422724/145673522-24d63a9b-7686-4f12-a5e7-733d7feac770.png)
+
+- Jipangu
+
+![Screenshot 2021-12-11 163531](https://user-images.githubusercontent.com/73422724/145673527-8401c58f-0190-4c26-a329-fbd4d45a7bfa.png)
+
 #### Kemudian kalian diminta untuk membatasi akses ke Doriki yang berasal dari subnet Blueno, Cipher, Elena dan Fukuro dengan beraturan sebagai berikut
 #### 4. Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00 pada hari Senin sampai Kamis.
 
@@ -69,7 +92,7 @@ iptables -A INPUT -s 10.20.1.0/24 -m time --timestart 07:00 --timestop 15:00 -j 
 ![soal5 elena](https://user-images.githubusercontent.com/63639703/145214714-5af93bb5-393c-4c5a-984b-2d76f7be4250.png)
 
 
-#### 6.Karena kita memiliki 2 Web Server, Luffy ingin Guanhao disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
+#### 6. Karena kita memiliki 2 Web Server, Luffy ingin Guanhao disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
 - Pada Doriki, install BIND9 lalu setting domain DNS Server pada file `/etc/bind/named.conf` sesuai gambar di bawah
 
 ![Screenshot 2021-12-11 163817](https://user-images.githubusercontent.com/73422724/145672241-947ec2c4-6adc-4bb0-ac3f-f1bf68f328bf.png)
@@ -103,4 +126,4 @@ iptables -t nat -A POSTROUTING -p tcp -d 10.20.0.27 --dport 80 -j SNAT --to-sour
 
 ![Screenshot 2021-12-11 164519](https://user-images.githubusercontent.com/73422724/145672976-9194a55b-c90b-4c82-8199-8a1f21b87fd7.png)
 
-##### Luffy berterima kasih pada kalian karena telah membantunya. Luffy juga mengingatkan agar semua aturan iptables harus disimpan pada sistem atau paling tidak kalian menyediakan script sebagai backup.
+#### Luffy berterima kasih pada kalian karena telah membantunya. Luffy juga mengingatkan agar semua aturan iptables harus disimpan pada sistem atau paling tidak kalian menyediakan script sebagai backup.
