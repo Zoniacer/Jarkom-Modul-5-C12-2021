@@ -127,3 +127,6 @@ iptables -t nat -A POSTROUTING -p tcp -d 10.20.0.27 --dport 80 -j SNAT --to-sour
 ![Screenshot 2021-12-11 164519](https://user-images.githubusercontent.com/73422724/145672976-9194a55b-c90b-4c82-8199-8a1f21b87fd7.png)
 
 #### Luffy berterima kasih pada kalian karena telah membantunya. Luffy juga mengingatkan agar semua aturan iptables harus disimpan pada sistem atau paling tidak kalian menyediakan script sebagai backup.
+
+Kendala :
+- Pada nomor 2, Dilakukan percobaan beberapa kali hingga status menjadi filtered yang kemudian status berubah open dan begitu seterusnya, dengan kata lain, kurang paham kapan berubah dan kenapa tidak stabil statusnya 
