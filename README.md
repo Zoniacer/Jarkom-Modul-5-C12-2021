@@ -68,3 +68,39 @@ iptables -A INPUT -s 10.20.1.0/24 -m time --timestart 07:00 --timestop 15:00 -j 
 
 ![soal5 elena](https://user-images.githubusercontent.com/63639703/145214714-5af93bb5-393c-4c5a-984b-2d76f7be4250.png)
 
+
+#### 6.Karena kita memiliki 2 Web Server, Luffy ingin Guanhao disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
+- Pada Doriki, install BIND9 lalu setting domain DNS Server pada file `/etc/bind/named.conf` sesuai gambar di bawah
+
+![Screenshot 2021-12-11 163817](https://user-images.githubusercontent.com/73422724/145672241-947ec2c4-6adc-4bb0-ac3f-f1bf68f328bf.png)
+
+- Pada Doriki, buat folder melalui perintah : `mkdir /etc/bind/jarkom `
+- Pada Doriki, copy file pada `/etc/bind/db.local` melalui perintah `cp /etc/bind/db.local /etc/bind/jarkom/jarkomC12.com `
+- Pada Doriki, edit file `/etc/bind/jarkom/jarkomC12.com ` sesuai gambar di bawah, untuk IP yang diatur menggunakan IP acak dalam hal ini 10.20.8.1
+
+![Screenshot 2021-12-11 164102](https://user-images.githubusercontent.com/73422724/145672597-77a65db5-6f14-4ac5-8c5d-74eb8b071da7.png)
+
+- Pada Guanhao, jalankan perintah berikut :
+```
+iptables -A PREROUTING -t nat -p tcp -d 10.20.8.1 --dport 80 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 10.20.0.26:80
+iptables -A PREROUTING -t nat -p tcp -d 10.20.8.1 --dport 80 -j DNAT --to-destination 10.20.0.27:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.20.0.26 --dport 80 -j SNAT --to-source 10.20.8.1:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.20.0.27 --dport 80 -j SNAT --to-source 10.20.8.1:80
+```
+##### Testing
+- Pada Guanhao, Jorge, Maingate Elena dan fukurou, install netcat melalui perintah `apt-get install netcat `
+- Pada Jorge dan Maingate, Jalankan `nc -l -p 80 `
+- Pada Client Elena dan Fukurou, Jalankan perintah `nc 10.20.8.1 80 ` lalu ketik kata-kata terserah, kata-kata tersebut akan muncul bergantian misal pertama kali di Jorge kemudian apabila di-run lagi `nc 10.20.8.1 80 ` lepas itu ketik kata-kata, maka berikutnya muncul di Maingate
+- Elena
+
+![Screenshot 2021-12-11 164440](https://user-images.githubusercontent.com/73422724/145672966-e76dc46b-ba1e-4f19-876b-edb308900bd9.png)
+
+- Jorge
+
+![Screenshot 2021-12-11 164542](https://user-images.githubusercontent.com/73422724/145672983-7211740a-5b19-4f19-826d-b83cce5229cc.png)
+
+- Maingate
+
+![Screenshot 2021-12-11 164519](https://user-images.githubusercontent.com/73422724/145672976-9194a55b-c90b-4c82-8199-8a1f21b87fd7.png)
+
+##### Luffy berterima kasih pada kalian karena telah membantunya. Luffy juga mengingatkan agar semua aturan iptables harus disimpan pada sistem atau paling tidak kalian menyediakan script sebagai backup.
